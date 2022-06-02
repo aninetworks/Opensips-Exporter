@@ -1,0 +1,41 @@
+# Server configuration
+
+#PID file location
+PIDFile:
+    path: "/var/run/opensips_exporter/"
+    name: "custom_opensips_exporter.pid"
+    
+#Server config section    
+Server:
+    -
+        #Host configuration get all statistics for version 2 of opensips
+        host: "localhost"
+        port: "8081"
+        URL: "http://localhost:8888/json/get_statistics?params=all"
+        body: ""
+        version: "2"
+    
+    -
+        #Host configuration get profile that is named tnkcalls (edit to whatever your profile is named)
+        host: "localhost"
+        port: "8082"
+        URL: "http://localhost:8888/json/profile_get_values?params=tnkcalls/b"
+        body: ""
+        version: "2"
+
+    -
+        #Host configuration get all opensips statistics for version 3.x of opensips
+        host: "localhost"
+        port: "8083"
+        URL: "localhost:8888/mi"
+        body: "{\"jsonrpc\":\"2.0\",\"method\":\"get_statistics\",\"params\":[[\"all\"]],\"id\":10}"
+        version: "3"
+
+    -
+        #Host configuration example getting the profile named trunkcalls
+        host: "localhost"
+        port: "8084"
+        URL: "localhost:8888/mi"
+        body: "{\"jsonrpc\":\"2.0\",\"method\":\"profile_get_values\",\"params\":[\"trunkcalls\"],\"id\":10}"
+        version: "3"
+
